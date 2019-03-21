@@ -28,8 +28,9 @@ requirements:
 
 test:
   commands:
-    - test -f $PREFIX/lib/libsolv.so  # [unix]
-    - test -f $PREFIX/lib/libsolv.so.1  # [unix]
+    - test -f $PREFIX/lib/libsolv.so  # [linux]
+    - test -f $PREFIX/lib/libsolv.so.1  # [linux]
+    - test -f $PREFIX/lib/libsolv.dylib  # [osx]
     - test -f $PREFIX/include/solv/repo.h  # [unix]
 
 about:
