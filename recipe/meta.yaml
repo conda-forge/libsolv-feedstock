@@ -13,6 +13,7 @@ source:
   patches:
     - msvc_support.patch
     - cmake_fixes.patch
+    - fix_osx_rpath.patch
 
 build:
   number: 1
