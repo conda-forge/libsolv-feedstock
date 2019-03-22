@@ -34,7 +34,7 @@ test:
     - test -f $PREFIX/lib/libsolv.so.1  # [linux]
     - test -f $PREFIX/lib/libsolv.dylib  # [osx]
     - test -f $PREFIX/include/solv/repo.h  # [unix]
-    - if exist %LIBRARY_INC%\\solv\\repo.h  # [win]
+    - if exist %LIBRARY_INC%\\solv\\repo.h (exit 0) else (exit 1)  # [win]
 
 about:
   home: https://github.com/openSUSE/libsolv
