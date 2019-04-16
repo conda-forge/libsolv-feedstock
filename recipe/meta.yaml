@@ -1,23 +1,20 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.3" %}
-{% set sha256 = "1ce36cbee920b1ee0f924262eb386023ef44a007ff872b442cab5b4568362c04" %}
+{% set version = "0.7.4.post" %}
+{% set sha256 = "3b620f435625e2ee420b5b5fb0c205974345e8e7224cb666c6b24072f2d1565a" %}
 
 package:
   name: {{ name|lower }}
-  version: {{ version }}
+  version: 0.7.4
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://github.com/openSUSE/libsolv/archive/{{ version }}.tar.gz
+  url: https://github.com/wolfv/libsolv/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - msvc_support.patch
-    - cmake_fixes.patch
-    - fix_osx_rpath.patch
 
 build:
-  number: 2
+  number: 0
   skip: True  # [win and vc<14]
+  string: conda_experimental
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
