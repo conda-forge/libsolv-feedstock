@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 3
+  number: 0
   skip: True  # [win and vc<14]
   string: conda_experimental
   run_exports:
