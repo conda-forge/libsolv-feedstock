@@ -1,6 +1,6 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.4.post" %}
-{% set sha256 = "3b620f435625e2ee420b5b5fb0c205974345e8e7224cb666c6b24072f2d1565a" %}
+{% set version = "0.7.4.post1" %}
+{% set sha256 = "e0c93e774fed5fd870a8fa3575703f1cbfd74a658f5b39adfac6070da3a477a2" %}
 
 package:
   name: {{ name|lower }}
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   skip: True  # [win and vc<14]
   string: conda_experimental
   run_exports:
