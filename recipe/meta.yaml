@@ -1,22 +1,21 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.4.post1" %}
-{% set sha256 = "e0c93e774fed5fd870a8fa3575703f1cbfd74a658f5b39adfac6070da3a477a2" %}
+{% set version = "0.7.5" %}
+{% set sha256 = "68a1b1434bb77e2532c82990e4ba6277d3e641d5b6bdb5180057bd876e218c02" %}
 
 package:
   name: {{ name|lower }}
-  version: 0.7.4
+  version: 0.7.5
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://github.com/wolfv/libsolv/archive/{{ version }}.tar.gz
+  url: https://github.com/openSUSE/libsolv/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
     - remove_installname.patch
 
 build:
-  number: 2
+  number: 0
   skip: True  # [win and vc<14]
-  string: conda_experimental3
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
