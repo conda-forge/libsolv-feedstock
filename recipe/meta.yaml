@@ -1,17 +1,15 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.5" %}
-{% set sha256 = "68a1b1434bb77e2532c82990e4ba6277d3e641d5b6bdb5180057bd876e218c02" %}
+{% set version = "0.7.6" %}
+{% set sha256 = "da381f636e4423db19b66498a800593273ed4ab507c5b4f7b32ffed3b6060c68" %}
 
 package:
   name: {{ name|lower }}
-  version: 0.7.5
+  version: "0.7.6"
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://github.com/openSUSE/libsolv/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - remove_installname.patch
 
 build:
   number: 0
