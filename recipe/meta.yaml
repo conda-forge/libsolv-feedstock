@@ -10,8 +10,6 @@ source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://github.com/openSUSE/libsolv/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - remove_installname.patch
 
 build:
   number: 0
