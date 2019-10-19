@@ -1,6 +1,6 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.6" %}
-{% set sha256 = "da381f636e4423db19b66498a800593273ed4ab507c5b4f7b32ffed3b6060c68" %}
+{% set version = "0.7.7" %}
+{% set sha256 = "dd34e30b9bc4dac614936415beb32f9bcff8416b954d93290e57a855ec2365ca" %}
 
 package:
   name: {{ name|lower }}
