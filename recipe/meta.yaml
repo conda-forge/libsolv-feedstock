@@ -37,7 +37,7 @@ test:
 
 about:
   home: https://github.com/openSUSE/libsolv
-  license: BSD 3-Clause
+  license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE.BSD
   summary: 'Library for solving packages and reading repositories'
