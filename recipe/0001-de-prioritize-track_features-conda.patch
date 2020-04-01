@@ -27,6 +27,19 @@ index 9352b71e..76d7b8b4 100644
        else
  	type = jsonparser_skip(jp, type);
      }
+@@ -161,7 +161,11 @@ parse_main(struct parsedata *pd, struct solv_jsonparser *jp)
+     {
+       if (type == JP_OBJECT && !strcmp("packages", jp->key))
+ 	type = parse_packages(pd, jp);
+-      if (type == JP_ARRAY && !strcmp("packages", jp->key))
++      else if (type == JP_ARRAY && !strcmp("packages", jp->key))
++	type = parse_packages2(pd, jp);
++      else if (type == JP_OBJECT && !strcmp("packages.conda", jp->key))
++	type = parse_packages(pd, jp);
++      else if (type == JP_ARRAY && !strcmp("packages.conda", jp->key))
+ 	type = parse_packages2(pd, jp);
+       else
+ 	type = jsonparser_skip(jp, type);
 diff --git a/src/knownid.h b/src/knownid.h
 index 96c9adf0..4c1730b5 100644
 --- a/src/knownid.h
