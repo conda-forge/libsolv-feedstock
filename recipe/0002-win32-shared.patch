@@ -1,0 +1,82 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 4c3da33d..347bb0de 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -58,6 +58,9 @@ ENDIF (NOT PKGCONFIG_INSTALL_DIR)
+ SET (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
+ INSTALL( FILES ${CMAKE_MODULE_PATH}/FindLibSolv.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/share/cmake/Modules )
+ 
++# for shared libraries on windows (DLLs), we just export all symbols for now
++SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++
+ INCLUDE (${CMAKE_SOURCE_DIR}/VERSION.cmake)
+ 
+ SET (have_system x)
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 6abb3adb..b34ebc6d 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -51,6 +51,7 @@ IF (DISABLE_SHARED)
+ ADD_LIBRARY (libsolv STATIC ${libsolv_SRCS})
+ ELSE (DISABLE_SHARED)
+ ADD_LIBRARY (libsolv SHARED ${libsolv_SRCS})
++TARGET_COMPILE_DEFINITIONS(libsolv PRIVATE SOLV_EXPORTS)
+ ENDIF (DISABLE_SHARED)
+ 
+ SET_TARGET_PROPERTIES(libsolv PROPERTIES OUTPUT_NAME "solv")
+diff --git a/win32/config.h b/win32/config.h
+new file mode 100644
+index 00000000..68eca634
+--- /dev/null
++++ b/win32/config.h
+@@ -0,0 +1,13 @@
++#ifdef _WIN32
++    #ifdef SOLV_STATIC_LIB
++        #define SOLV_API
++    #else
++        #ifdef SOLV_EXPORTS
++            #define SOLV_API __declspec(dllexport)
++        #else
++            #define SOLV_API __declspec(dllimport)
++        #endif
++    #endif
++#else
++    #define SOLV_API
++#endif
+\ No newline at end of file
+diff --git a/win32/getopt.c b/win32/getopt.c
+index 1e7e4510..c4fc9643 100644
+--- a/win32/getopt.c
++++ b/win32/getopt.c
+@@ -5,8 +5,10 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+ 
+-char *optarg;
+-int optind=1, opterr=1, optopt, __optpos, __optreset=0;
++#include "config.h"
++
++SOLV_API char *optarg;
++SOLV_API int optind=1, opterr=1, optopt, __optpos, __optreset=0;
+ 
+ #define optpos __optpos
+ 
+diff --git a/win32/getopt.h b/win32/getopt.h
+index 35cbd358..861ff0b3 100644
+--- a/win32/getopt.h
++++ b/win32/getopt.h
+@@ -5,9 +5,12 @@
+ extern "C" {
+ #endif
+ 
++#include "config.h"
++
+ int getopt(int, char * const [], const char *);
+-extern char *optarg;
+-extern int optind, opterr, optopt, optreset;
++
++SOLV_API extern char *optarg;
++SOLV_API extern int optind, opterr, optopt, optreset;
+ 
+ struct option {
+ 	const char *name;
