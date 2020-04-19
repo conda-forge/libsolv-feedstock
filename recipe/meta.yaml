@@ -12,9 +12,10 @@ source:
   sha256: {{ sha256 }}
   patches:
     - 0001-de-prioritize-track_features-conda.patch
+    - 0002-win32-shared.patch  # [win]
 
 build:
-  number: 3
+  number: 4
   skip: True  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
@@ -29,11 +30,16 @@ requirements:
 
 test:
   commands:
-    - test -f $PREFIX/lib/libsolv.so  # [linux]
+    - test -f $PREFIX/lib/libsolv${SHLIB_EXT}  # [unix]
+    - test -f $PREFIX/lib/libsolvext${SHLIB_EXT}  # [unix]
     - test -f $PREFIX/lib/libsolv.so.1  # [linux]
-    - test -f $PREFIX/lib/libsolv.dylib  # [osx]
     - test -f $PREFIX/include/solv/repo.h  # [unix]
     - if exist %LIBRARY_INC%\\solv\\repo.h (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_INC%\\lib\\solv.lib (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_INC%\\lib\\solvext.lib (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_INC%\\bin\\solv.dll (exit 0) else (exit 1)  # [win]
+    - dumpsolv.exe -h  # [win]
+    - dumpsolv -h  # [unix]
 
 about:
   home: https://github.com/openSUSE/libsolv
