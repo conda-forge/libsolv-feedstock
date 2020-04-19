@@ -1,7 +1,11 @@
-mkdir build 
-cd build
+set "CFLAGS=%CFLAGS:-GL=%"
+echo %CFLAGS%
 
 set "CXXFLAGS=%CXXFLAGS:-GL=%"
+echo %CXXFLAGS%
+
+mkdir build
+cd build
 
 cmake -G "NMake Makefiles" ^
       -D CMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
