@@ -7,6 +7,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DCMAKE_INSTALL_LIBDIR=lib \
       -DENABLE_CONDA=ON \
       -DMULTI_SEMANTICS=ON \
+      -DCMAKE_BUILD_TYPE=Release \
       ..
 
 make VERBOSE=1 -j${CPU_COUNT}
