@@ -1,6 +1,6 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.11" %}
-{% set sha256 = "dad9da25314dce7616d77c85e303684b9fa2970283e250f89e642e47836cd306" %}
+{% set version = "0.7.12" %}
+{% set sha256 = "db7a8c8c62931a6d358a48f8e47bf6382d3a48a0f225565a6c6846e167210366" %}
 
 package:
   name: {{ name|lower }}
@@ -15,8 +15,8 @@ source:
     - 0002-win32-shared.patch  # [win]
 
 build:
-  number: 4
-  skip: True  # [win and vc<14]
+  number: 0
+  skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
@@ -46,8 +46,8 @@ about:
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE.BSD
-  summary: 'Library for solving packages and reading repositories'
-  description: 'libsolv, a free package dependency solver using a satisfiability algorithm.'
+  summary: Library for solving packages and reading repositories
+  description: libsolv, a free package dependency solver using a satisfiability algorithm.
   dev_url: https://github.com/openSUSE/libsolv
 
 extra:
