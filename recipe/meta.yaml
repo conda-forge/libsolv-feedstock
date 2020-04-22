@@ -10,9 +10,6 @@ source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://github.com/openSUSE/libsolv/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - 0001-de-prioritize-track_features-conda.patch
-    - 0002-win32-shared.patch  # [win]
 
 build:
   number: 0
