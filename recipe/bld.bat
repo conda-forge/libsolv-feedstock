@@ -1,7 +1,7 @@
-set "CFLAGS=%CFLAGS:-GL=%"
+set "CFLAGS= -MD"
 echo %CFLAGS%
 
-set "CXXFLAGS=%CXXFLAGS:-GL=%"
+set "CXXFLAGS= -MD"
 echo %CXXFLAGS%
 
 mkdir build
@@ -17,7 +17,7 @@ cmake -G "NMake Makefiles" ^
       -D WITHOUT_COOKIEOPEN=ON ^
       -D CMAKE_BUILD_TYPE=Release ^
       ..
-      
+
 if errorlevel 1 exit 1
 
 nmake
