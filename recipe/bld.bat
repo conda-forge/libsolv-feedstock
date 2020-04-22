@@ -1,4 +1,4 @@
-set "CFLAGS=%CFLAGS:-GL=%"
+set "CFLAGS= -MD"
 echo %CFLAGS%
 
 set "CXXFLAGS= -MD"
