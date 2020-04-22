@@ -1,7 +1,7 @@
 set "CFLAGS=%CFLAGS:-GL=%"
 echo %CFLAGS%
 
-set "CXXFLAGS=%CXXFLAGS:-GL=%"
+set "CXXFLAGS=%CXXFLAGS:-MD=%"
 echo %CXXFLAGS%
 
 mkdir build
