@@ -40,3 +40,23 @@ index 43b566a1..dea09dc9 100644
  
  #cmakedefine LIBSOLV_FEATURE_LINKED_PKGS
  #cmakedefine LIBSOLV_FEATURE_COMPLEX_DEPS
+diff --git a/win32/CMakeLists.txt b/win32/CMakeLists.txt
+index 9a87af7b..161f0725 100644
+--- a/win32/CMakeLists.txt
++++ b/win32/CMakeLists.txt
+@@ -1,4 +1,5 @@
+ INCLUDE_DIRECTORIES (${PROJECT_SOURCE_DIR}/win32)
++
+ SET (WIN32_COMPAT_SOURCES
+   ${PROJECT_SOURCE_DIR}/win32/fnmatch.c
+   ${PROJECT_SOURCE_DIR}/win32/getopt.c
+@@ -6,4 +7,6 @@ SET (WIN32_COMPAT_SOURCES
+   ${PROJECT_SOURCE_DIR}/win32/regexec.c
+   ${PROJECT_SOURCE_DIR}/win32/strfncs.c
+   ${PROJECT_SOURCE_DIR}/win32/tre-mem.c
+-)
+\ No newline at end of file
++)
++
++INSTALL (FILES ${PROJECT_SOURCE_DIR}/win32/config.h DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/solv")
+\ No newline at end of file
