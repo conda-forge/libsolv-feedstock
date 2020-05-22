@@ -12,9 +12,10 @@ source:
   sha256: {{ sha256 }}
   patches:
     - export_solv_version_win.patch  # [win]
+    - enable_subprio_comparison.patch
 
 build:
-  number: 2
+  number: 3
   skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
