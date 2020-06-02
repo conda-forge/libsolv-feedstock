@@ -1,6 +1,6 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.13" %}
-{% set sha256 = "869985ff4c5a3d8a1544900c26277defec362eea0b85498be5b1d09c3c0e0e62" %}
+{% set version = "0.7.14" %}
+{% set sha256 = "34a67c23cedd38a949607d8cdbd867aa4b07556f18a57e17162ac962bbdbbf54" %}
 
 package:
   name: {{ name|lower }}
@@ -15,7 +15,7 @@ source:
     - enable_subprio_comparison.patch
 
 build:
-  number: 4
+  number: 0
   skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
