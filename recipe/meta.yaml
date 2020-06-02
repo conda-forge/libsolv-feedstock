@@ -24,7 +24,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - make # [not win]
+    - make  # [not win]
     - cmake
   host:
     - zlib
