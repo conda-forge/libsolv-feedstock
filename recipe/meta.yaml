@@ -45,6 +45,8 @@ outputs:
         - dumpsolv -h  # [unix]
   - name: libsolv-static
     files: lib/*.a
+    build:
+      skip: true  # [win]
     script: install.sh  # [unix]
     requirements:
       build:
