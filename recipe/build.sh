@@ -8,7 +8,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DENABLE_CONDA=ON \
       -DMULTI_SEMANTICS=ON \
       -DCMAKE_BUILD_TYPE=Release \
+      -DENABLE_STATIC=ON \
       ..
 
 make VERBOSE=1 -j${CPU_COUNT}
-make install
