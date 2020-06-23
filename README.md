@@ -91,6 +91,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-libsolv-green.svg)](https://anaconda.org/conda-forge/libsolv) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libsolv.svg)](https://anaconda.org/conda-forge/libsolv) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libsolv.svg)](https://anaconda.org/conda-forge/libsolv) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libsolv.svg)](https://anaconda.org/conda-forge/libsolv) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libsolv--static-green.svg)](https://anaconda.org/conda-forge/libsolv-static) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libsolv-static.svg)](https://anaconda.org/conda-forge/libsolv-static) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libsolv-static.svg)](https://anaconda.org/conda-forge/libsolv-static) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libsolv-static.svg)](https://anaconda.org/conda-forge/libsolv-static) |
 
 Installing libsolv
 ==================
@@ -101,10 +102,10 @@ Installing `libsolv` from the `conda-forge` channel can be achieved by adding `c
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `libsolv` can be installed with:
+Once the `conda-forge` channel has been enabled, `libsolv, libsolv-static` can be installed with:
 
 ```
-conda install libsolv
+conda install libsolv libsolv-static
 ```
 
 It is possible to list all of the versions of `libsolv` available on your platform with:
