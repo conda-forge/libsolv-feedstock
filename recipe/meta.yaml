@@ -62,8 +62,8 @@ outputs:
       commands:
         - test -f ${PREFIX}/lib/libsolv.a  # [unix]
         - test -f ${PREFIX}/lib/libsolvext.a  # [unix]
-        - if exist %LIBRAY_LIB%\solv_static.lib (exit 0) else (exit 1)  # [win]
-        - if exist %LIBRAY_LIB%\solvext_static.lib (exit 0) else (exit 1)  # [win]
+        - if exist %LIBRARY_LIB%\solv_static.lib (exit 0) else (exit 1)  # [win]
+        - if exist %LIBRARY_LIB%\solvext_static.lib (exit 0) else (exit 1)  # [win]
 
 about:
   home: https://github.com/openSUSE/libsolv
