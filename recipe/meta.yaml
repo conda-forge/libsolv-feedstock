@@ -11,7 +11,7 @@ source:
   url: https://github.com/openSUSE/libsolv/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-    - export_solv_version_win.patch  # [win]
+    - win_export_and_static_build.patch  # [win]
     - fix_startswith_pep404.patch
 
 build:
@@ -25,6 +25,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - make  # [not win]
+    - ninja  # [win]
     - cmake
   host:
     - zlib
@@ -38,32 +39,31 @@ outputs:
         - test -f ${PREFIX}/lib/libsolvext${SHLIB_EXT}  # [unix]
         - test -f ${PREFIX}/lib/libsolv.so.1  # [linux]
         - test -f ${PREFIX}/include/solv/repo.h  # [unix]
-        - if exist %LIBRARY_INC%\\solv\\repo.h (exit 0) else (exit 1)  # [win]
-        - if exist %LIBRARY_INC%\\lib\\solv.lib (exit 0) else (exit 1)  # [win]
-        - if exist %LIBRARY_INC%\\lib\\solvext.lib (exit 0) else (exit 1)  # [win]
-        - if exist %LIBRARY_INC%\\bin\\solv.dll (exit 0) else (exit 1)  # [win]
+        - if exist %LIBRARY_INC%\solv\repo.h (exit 0) else (exit 1)  # [win]
+        - if exist %LIBRARY_LIB%\solv.lib (exit 0) else (exit 1)  # [win]
+        - if exist %LIBRARY_LIB%\solvext.lib (exit 0) else (exit 1)  # [win]
+        - if exist %LIBRARY_BIN%\solv.dll (exit 0) else (exit 1)  # [win]
         - dumpsolv.exe -h  # [win]
         - dumpsolv -h  # [unix]
   - name: libsolv-static
-    files: lib/*.a
-    build:
-      skip: true  # [win]
+    files: lib/*.a  # [unix]
     script: install.sh  # [unix]
+    script: install_static.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - make  # [not win]
+        - ninja  # [win]
         - cmake
       host:
         - zlib
-        - {{ pin_subpackage('libsolv', exact=True) }}
-      run:
-        - {{ pin_subpackage('libsolv', exact=True) }}
     test:
       commands:
         - test -f ${PREFIX}/lib/libsolv.a  # [unix]
         - test -f ${PREFIX}/lib/libsolvext.a  # [unix]
+        - if exist %LIBRAY_LIB%\solv_static.lib (exit 0) else (exit 1)  # [win]
+        - if exist %LIBRAY_LIB%\solvext_static.lib (exit 0) else (exit 1)  # [win]
 
 about:
   home: https://github.com/openSUSE/libsolv
