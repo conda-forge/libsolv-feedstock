@@ -9,6 +9,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DMULTI_SEMANTICS=ON \
       -DCMAKE_BUILD_TYPE=Release \
       -DENABLE_STATIC=ON \
+      ${CMAKE_ARGS} \
       ..
 
 make VERBOSE=1 -j${CPU_COUNT}
