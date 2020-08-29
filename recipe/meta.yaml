@@ -59,9 +59,9 @@ outputs:
         - cmake
       host:
         - zlib
-        - {{ pin_subpackage("libsolv, exact=True) }}
+        - {{ pin_subpackage("libsolv", exact=True) }}
       run:
-        - {{ pin_subpackage("libsolv, exact=True) }}
+        - {{ pin_subpackage("libsolv", exact=True) }}
     test:
       commands:
         - test -f ${PREFIX}/lib/libsolv.a  # [unix]
