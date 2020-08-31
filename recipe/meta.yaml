@@ -16,7 +16,7 @@ source:
     - 0001-Feature-depriorization-first.patch
 
 build:
-  number: 4
+  number: 5
   skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
@@ -47,7 +47,6 @@ outputs:
         - dumpsolv.exe -h  # [win]
         - dumpsolv -h  # [unix]
   - name: libsolv-static
-    files: lib/*.a  # [unix]
     script: install.sh  # [unix]
     script: install_static.bat  # [win]
     requirements:
@@ -59,6 +58,9 @@ outputs:
         - cmake
       host:
         - zlib
+        - {{ pin_subpackage("libsolv", exact=True) }}
+      run:
+        - {{ pin_subpackage("libsolv", exact=True) }}
     test:
       commands:
         - test -f ${PREFIX}/lib/libsolv.a  # [unix]
