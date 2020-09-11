@@ -1,6 +1,6 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.14" %}
-{% set sha256 = "34a67c23cedd38a949607d8cdbd867aa4b07556f18a57e17162ac962bbdbbf54" %}
+{% set version = "0.7.15" %}
+{% set sha256 = "2a1d6ae1719288ecb368b33893bc2f4d047dbf4426cafa1dc6af4288388e6269" %}
 
 package:
   name: {{ name|lower }}
@@ -16,7 +16,7 @@ source:
     - 0001-Feature-depriorization-first.patch
 
 build:
-  number: 5
+  number: 0
   skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
