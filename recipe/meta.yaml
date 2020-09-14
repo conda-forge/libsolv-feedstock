@@ -12,8 +12,6 @@ source:
   sha256: {{ sha256 }}
   patches:
     - win_export_and_static_build.patch  # [win]
-    - fix_startswith_pep404.patch
-    - 0001-Feature-depriorization-first.patch
 
 build:
   number: 0
