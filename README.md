@@ -5,9 +5,11 @@ Home: https://github.com/openSUSE/libsolv
 
 Package license: BSD-3-Clause
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/libsolv-feedstock/blob/master/LICENSE.txt)
 
 Summary: Library for solving packages and reading repositories
+
+Development: https://github.com/openSUSE/libsolv
 
 libsolv, a free package dependency solver using a satisfiability algorithm.
 
