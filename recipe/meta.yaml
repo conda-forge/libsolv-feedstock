@@ -12,9 +12,11 @@ source:
   sha256: {{ sha256 }}
   patches:
     - win_export_and_static_build.patch  # [win]
+    - fix-win32-regex.patch  # [win]
+    - use-only-tar-bz2.patch
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
