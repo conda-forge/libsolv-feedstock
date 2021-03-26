@@ -1,6 +1,6 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.17" %}
-{% set sha256 = "7567f9e3ff47705d36486797220bddf4e858d5c8deb5167bd77d8d55c761f65b" %}
+{% set version = "0.7.18" %}
+{% set sha256 = "eae52c55c9a305ff2aada3169f2f4dacd9d87ffab4e6515c41dcb224c1aa814f" %}
 
 package:
   name: {{ name|lower }}
@@ -12,11 +12,9 @@ source:
   sha256: {{ sha256 }}
   patches:
     - win_export_and_static_build.patch  # [win]
-    - fix-win32-regex.patch  # [win]
-    - use-only-tar-bz2.patch
 
 build:
-  number: 1
+  number: 0
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
