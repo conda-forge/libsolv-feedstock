@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
   patches:
     - win_export_and_static_build.patch  # [win]
-    - add_conda_timestamp_maximization.patch.patch
+    - add_conda_timestamp_maximization.patch
     - add_better_conda_trackfeatures_depriorization.patch
 
 build:
