@@ -12,11 +12,10 @@ source:
   sha256: {{ sha256 }}
   patches:
     - win_export_and_static_build.patch  # [win]
-    - add_conda_timestamp_maximization.patch
-    - add_better_conda_trackfeatures_depriorization.patch
+    - conda_variant_priorization.patch
 
 build:
-  number: 1
+  number: 2
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
