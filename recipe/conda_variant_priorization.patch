@@ -12,21 +12,10 @@ index 21ad6bfb..408a236a 100644
  		return r;
  	    }
 diff --git a/src/policy.c b/src/policy.c
-index c02d2373..cfc4a71d 100644
+index c02d2373..d1d526fe 100644
 --- a/src/policy.c
 +++ b/src/policy.c
-@@ -23,7 +23,9 @@
- #include "poolarch.h"
- #include "linkedpkg.h"
- #include "cplxdeps.h"
--
-+#ifdef ENABLE_CONDA
-+#include "conda.h"
-+#endif
- 
- 
- /*-----------------------------------------------------------------*/
-@@ -833,6 +835,79 @@ move_installed_to_front(Pool *pool, Queue *plist)
+@@ -833,6 +833,79 @@ move_installed_to_front(Pool *pool, Queue *plist)
      }
  }
  
@@ -106,7 +95,7 @@ index c02d2373..cfc4a71d 100644
  #ifdef ENABLE_CONDA
  static int
  pool_featurecountcmp(Pool *pool, Solvable *s1, Solvable *s2)
-@@ -863,23 +938,208 @@ pool_buildflavorcmp(Pool *pool, Solvable *s1, Solvable *s2)
+@@ -863,23 +936,221 @@ pool_buildflavorcmp(Pool *pool, Solvable *s1, Solvable *s2)
      return 0;
    return pool_evrcmp_str(pool, f1 ? f1 : "" , f2 ? f2 : "", EVRCMP_COMPARE);
  }
@@ -143,16 +132,29 @@ index c02d2373..cfc4a71d 100644
 +
 +int check_deps_unequal(Pool* pool, Queue* q1, Queue* q2, Id name)
 +{
-+  Id h1 = 0, h2 = 0;
-+  int i;
-+
++  Id dep;
++  int i, j;
++  int found = 0;
 +  for (i = 0; i < q1->count; ++i)
-+    h1 ^= q1->elements[i];
++  {
++    dep = q1->elements[i];
++    if (ISRELDEP(dep) && GETRELDEP(pool, dep)->name == name)
++    {
++      for (j = 0; j < q2->count; ++j)
++      {
++        if (q2->elements[j] == dep)
++        {
++          found = 1;
++          break;
++        }
++      }
++      if (!found)
++        return 1;
 +
-+  for (i = 0; i < q2->count; ++i)
-+    h2 ^= q2->elements[i];
-+
-+  return h1 != h2;
++      found = 0;
++    }
++  }
++  return 0;
 +}
 +
 +Id best_matching(Pool* pool, Queue* q, Id name, int* all_have_trackfeatures)
@@ -236,7 +238,6 @@ index c02d2373..cfc4a71d 100644
 +
 +    // first make sure that deps are different between a & b
 +    int deps_unequal = check_deps_unequal(pool, &q1, &q2, rd1->name);
-+
 +    if (!deps_unequal)
 +      {
 +        queue_push(&seen, rd1->name);
@@ -251,7 +252,6 @@ index c02d2373..cfc4a71d 100644
 +    // ignoring this case for now
 +    if (b1 == 0 || b2 == 0)
 +      continue;
-+      // comparison_result += (b1 - b2);
 +
 +    // if one has deps with track features, and the other does not, 
 +    // downweight the one with track features
@@ -289,7 +289,9 @@ index c02d2373..cfc4a71d 100644
 +
 +    unsigned long long bta = repodata_lookup_num(ra, a, SOLVABLE_BUILDTIME, 0ull);
 +    unsigned long long btb = repodata_lookup_num(rb, b, SOLVABLE_BUILDTIME, 0ull);
-+    res = btb - bta;
++
++    res = (btb > bta) ? 1 : -1;
++    POOL_DEBUG(SOLV_DEBUG_POLICY, "Fallback to timestamp comparison: %llu vs %llu: [%d]\n", bta, btb, res);
 +  }
 +
 +  POOL_DEBUG(SOLV_DEBUG_POLICY, "Selecting variant [%c] of (a) %s vs (b) %s (score: %d)\n",
@@ -320,7 +322,7 @@ index c02d2373..cfc4a71d 100644
  
    /* sort by name first, prefer installed */
    solv_sort(plist->elements, plist->count, sizeof(Id), prune_to_best_version_sortcmp, pool);
-@@ -891,10 +1151,10 @@ prune_to_best_version(Pool *pool, Queue *plist)
+@@ -891,10 +1162,10 @@ prune_to_best_version(Pool *pool, Queue *plist)
        s = pool->solvables + plist->elements[i];
  
        POOL_DEBUG(SOLV_DEBUG_POLICY, "- %s [%d]%s\n",
@@ -334,7 +336,7 @@ index c02d2373..cfc4a71d 100644
          {
            best = s;
            continue;
-@@ -904,49 +1164,56 @@ prune_to_best_version(Pool *pool, Queue *plist)
+@@ -904,49 +1175,56 @@ prune_to_best_version(Pool *pool, Queue *plist)
        if (best->name != s->name)   /* new name */
          {
            plist->elements[j++] = best - pool->solvables; /* move old best to front */
