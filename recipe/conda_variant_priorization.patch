@@ -1,5 +1,5 @@
 diff --git a/src/conda.c b/src/conda.c
-index 21ad6bfb..408a236a 100644
+index 6f6a65a6..408a236a 100644
 --- a/src/conda.c
 +++ b/src/conda.c
 @@ -134,7 +134,7 @@ solv_vercmp_conda(const char *s1, const char *q1, const char *s2, const char *q2
@@ -11,8 +11,17 @@ index 21ad6bfb..408a236a 100644
  	      if (r)
  		return r;
  	    }
+@@ -670,7 +670,7 @@ pool_conda_matchspec(Pool *pool, const char *name)
+   if (build)
+     {
+       *p++ = ' ';
+-      memmove(p, build, buildend - build);
++      memcpy(p, build, buildend - build);
+       p += buildend - build;
+     }
+   evrid = pool_strn2id(pool, version, p - version, 1);
 diff --git a/src/policy.c b/src/policy.c
-index c02d2373..d1d526fe 100644
+index c02d2373..d6354cd2 100644
 --- a/src/policy.c
 +++ b/src/policy.c
 @@ -833,6 +833,79 @@ move_installed_to_front(Pool *pool, Queue *plist)
@@ -230,7 +239,7 @@ index c02d2373..d1d526fe 100644
 +
 +    Reldep* rd1 = GETRELDEP(pool, x1);
 +    for (j = 0; j < seen.count && has_seen == 0; ++j)
-+      if (seen.elements[i] == rd1->name)
++      if (seen.elements[j] == rd1->name)
 +        has_seen = 1;
 +
 +    if (has_seen)
@@ -336,7 +345,7 @@ index c02d2373..d1d526fe 100644
          {
            best = s;
            continue;
-@@ -904,49 +1175,56 @@ prune_to_best_version(Pool *pool, Queue *plist)
+@@ -904,49 +1175,54 @@ prune_to_best_version(Pool *pool, Queue *plist)
        if (best->name != s->name)   /* new name */
          {
            plist->elements[j++] = best - pool->solvables; /* move old best to front */
@@ -387,7 +396,7 @@ index c02d2373..d1d526fe 100644
 -  if (plist->count > 1)
 +  Queue q;
 +  queue_init(&q);
-+  for (i = j = 0; i < plist->count; i++)
++  for (i = 0; i < plist->count; i++)
      {
 -      if (plist->count == 2)
 -        prune_obsoleted_2(pool, plist);
@@ -408,8 +417,6 @@ index c02d2373..d1d526fe 100644
  
 +  if (q.count > 1)
 +    {
-+      Queue sq;
-+      queue_init(&sq);
 +      // order by first-level deps
 +      solv_sort(q.elements, q.count, sizeof(Id), sort_by_best_dependencies, pool);
 +    }
