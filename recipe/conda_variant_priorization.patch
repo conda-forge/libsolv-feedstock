@@ -1,5 +1,5 @@
 diff --git a/src/conda.c b/src/conda.c
-index 6f6a65a6..408a236a 100644
+index 21ad6bfb..408a236a 100644
 --- a/src/conda.c
 +++ b/src/conda.c
 @@ -134,7 +134,7 @@ solv_vercmp_conda(const char *s1, const char *q1, const char *s2, const char *q2
@@ -11,15 +11,6 @@ index 6f6a65a6..408a236a 100644
  	      if (r)
  		return r;
  	    }
-@@ -670,7 +670,7 @@ pool_conda_matchspec(Pool *pool, const char *name)
-   if (build)
-     {
-       *p++ = ' ';
--      memmove(p, build, buildend - build);
-+      memcpy(p, build, buildend - build);
-       p += buildend - build;
-     }
-   evrid = pool_strn2id(pool, version, p - version, 1);
 diff --git a/src/policy.c b/src/policy.c
 index c02d2373..d6354cd2 100644
 --- a/src/policy.c
