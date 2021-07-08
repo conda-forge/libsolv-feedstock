@@ -14,9 +14,10 @@ source:
     - win_export_and_static_build.patch  # [win]
     - conda_variant_priorization.patch
     - add_strict_repo_prio_rule.patch
+    - memcpy_to_memmove.patch
 
 build:
-  number: 3
+  number: 4
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
