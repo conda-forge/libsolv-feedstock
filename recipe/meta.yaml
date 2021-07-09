@@ -17,7 +17,7 @@ source:
     - memcpy_to_memmove.patch
 
 build:
-  number: 4
+  number: 5
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
@@ -83,3 +83,4 @@ extra:
     - JohanMabille
     - wolfv
     - davidbrochart
+    - adriendelsalle
