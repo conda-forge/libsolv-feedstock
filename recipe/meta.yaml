@@ -1,6 +1,6 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.19" %}
-{% set sha256 = "67e6a46e9e03410d3d27c963c0382881b064c50d2e7ca25860c515df3ca4dae1" %}
+{% set version = "0.7.20" %}
+{% set sha256 = "8bc0ce89dc8e6277825181db795589b26f913c6d85ca74c833641c1df75c07bc" %}
 
 package:
   name: {{ name|lower }}
@@ -17,7 +17,7 @@ source:
     - memcpy_to_memmove.patch
 
 build:
-  number: 5
+  number: 0
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
