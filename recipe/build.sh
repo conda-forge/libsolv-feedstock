@@ -2,7 +2,8 @@
 mkdir -p build
 cd build
 
-cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
+cmake -G "Ninja" \
+      -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DCMAKE_PREFIX_PATH=$PREFIX \
       -DCMAKE_INSTALL_LIBDIR=lib \
       -DENABLE_CONDA=ON \
@@ -12,4 +13,4 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       ${CMAKE_ARGS} \
       ..
 
-make VERBOSE=1 -j${CPU_COUNT}
+ninja

@@ -1,6 +1,7 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.19" %}
-{% set sha256 = "67e6a46e9e03410d3d27c963c0382881b064c50d2e7ca25860c515df3ca4dae1" %}
+{% set version = "0.7.20" %}
+{% set sha256 = "8bc0ce89dc8e6277825181db795589b26f913c6d85ca74c833641c1df75c07bc" %}
+{% set build_number = "0" %}
 
 package:
   name: {{ name|lower }}
@@ -14,20 +15,21 @@ source:
     - win_export_and_static_build.patch  # [win]
     - conda_variant_priorization.patch
     - add_strict_repo_prio_rule.patch
-    - memcpy_to_memmove.patch
 
 build:
-  number: 5
+  number: {{ build_number }}
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
-
+  ignore_run_exports:  # [win]
+    - zlib             # [win]
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - make  # [not win]
-    - ninja  # [win]
+    - ninja
     - cmake
+    - m2-patch  # [win]
+    - patch     # [not win]
   host:
     - zlib
 
@@ -53,10 +55,11 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - make  # [not win]
-        - ninja  # [win]
+        - ninja
         - cmake
       host:
+        # - PkgConfig
+        # - EXPAT
         - zlib
         - {{ pin_subpackage("libsolv", exact=True) }}
       run:
@@ -76,6 +79,8 @@ about:
   summary: Library for solving packages and reading repositories
   description: libsolv, a free package dependency solver using a satisfiability algorithm.
   dev_url: https://github.com/openSUSE/libsolv
+  doc_url: https://github.com/openSUSE/libsolv/tree/master/doc
+  doc_src_url: https://github.com/openSUSE/libsolv/tree/master/doc
 
 extra:
   recipe-maintainers:

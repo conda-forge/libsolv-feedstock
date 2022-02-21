@@ -1,5 +1,5 @@
 cd build
-make install
+ninja install
 
 if [[ "$PKG_NAME" == *static ]]
 then
