@@ -8,6 +8,7 @@ cmake -G "Ninja" \
       -DCMAKE_INSTALL_LIBDIR=lib \
       -DENABLE_CONDA=ON \
       -DMULTI_SEMANTICS=ON \
+      -DENABLE_PCRE2=ON \
       -DCMAKE_BUILD_TYPE=Release \
       -DENABLE_STATIC=ON \
       ${CMAKE_ARGS} \
