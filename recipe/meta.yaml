@@ -61,7 +61,7 @@ outputs:
         - cmake
       host:
         - zlib
-        - pcre2
+        - pcre2-static
         - {{ pin_subpackage("libsolv", exact=True) }}
       run:
         - {{ pin_subpackage("libsolv", exact=True) }}
