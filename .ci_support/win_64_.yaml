@@ -7,7 +7,7 @@ channel_targets:
 cxx_compiler:
 - vs2019
 pcre2:
-- '10.37'
+- '10.40'
 target_platform:
 - win-64
 zlib:
