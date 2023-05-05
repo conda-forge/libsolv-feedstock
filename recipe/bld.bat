@@ -1,9 +1,3 @@
-set "CFLAGS= -MD"
-echo %CFLAGS%
-
-set "CXXFLAGS= -MD"
-echo %CXXFLAGS%
-
 mkdir build
 cd build
 
@@ -40,7 +34,6 @@ cmake -G "Ninja" ^
       -D ENABLE_STATIC=ON ^
       -D DISABLE_SHARED=ON ^
       ..
-
 if errorlevel 1 exit 1
 
 ninja
