@@ -1,3 +1,5 @@
+diff --git a/ext/repo_conda.c b/ext/repo_conda.c
+index 9211cbe..e411527 100644
 --- a/ext/repo_conda.c
 +++ b/ext/repo_conda.c
 @@ -314,8 +314,7 @@ parse_package(struct parsedata *pd, struct solv_jsonparser *jp, char *kfn, char
@@ -19,3 +21,4 @@
 +             printf("warning: subdir mismatch.\n");
             }
         }
+     }
