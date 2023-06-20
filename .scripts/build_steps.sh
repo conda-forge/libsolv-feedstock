@@ -32,9 +32,9 @@ pkgs_dirs:
 CONDARC
 
 
-mamba install --update-specs --yes --quiet --channel conda-forge \
+conda install --update-specs --yes --quiet --channel conda-forge \
     conda-build pip boa conda-forge-ci-setup=3
-mamba update --update-specs --yes --quiet --channel conda-forge \
+conda install --update-specs --yes --quiet --channel conda-forge \
     conda-build pip boa conda-forge-ci-setup=3
 
 # set up the condarc
