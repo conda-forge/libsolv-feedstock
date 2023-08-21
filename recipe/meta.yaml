@@ -32,7 +32,8 @@ requirements:
 
 outputs:
   - name: libsolv
-    script: install.sh  # [unix]
+    script: install.sh   # [unix]
+    script: install.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -54,8 +55,8 @@ outputs:
         - dumpsolv.exe -h  # [win]
         - dumpsolv -h      # [unix]
   - name: libsolv-static
-    script: install.sh  # [unix]
-    script: install_static.bat  # [win]
+    script: install.sh   # [unix]
+    script: install.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
