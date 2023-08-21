@@ -1,10 +1,7 @@
-cmake --install build/ --verbose
-if %errorlevel% NEQ 0 exit /b %errorlevel%
-
 if "%PKG_NAME:*static=%"=="%PKG_NAME%" (
-    REM relying on conda to dedup package
-    echo Doing nothing
+    cmake --install build_static/ --verbose
+    if %errorlevel% NEQ 0 exit /b %errorlevel%
 ) else (
-    del /q "%LIBRARY_LIB%\*_static.lib"
+    cmake --install build/ --verbose
+    if %errorlevel% NEQ 0 exit /b %errorlevel%
 )
-if %errorlevel% NEQ 0 exit /b %errorlevel%
