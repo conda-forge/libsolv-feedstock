@@ -4,7 +4,7 @@
 
 package:
   # Setting a dummy name, because multi-output behaviour with similar name has surprising behaviour
-  name: {{ name|lower }}-dummy
+  name: {{ name|lower }}-split
   version: {{ version }}
 
 source:
