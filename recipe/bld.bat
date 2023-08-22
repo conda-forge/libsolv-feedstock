@@ -4,28 +4,44 @@ echo %CFLAGS%
 set "CXXFLAGS= -MD"
 echo %CXXFLAGS%
 
-cmake -G "Ninja" ^
-    -B build/ ^
-    -D ENABLE_CONDA=ON ^
-    -D MULTI_SEMANTICS=ON ^
-    -D WITHOUT_COOKIEOPEN=ON ^
-    -D ENABLE_STATIC=OFF ^
-    -D DISABLE_SHARED=OFF ^
-    %CMAKE_ARGS%
-if errorlevel 1 exit 1
-
-cmake --build build/ --parallel %CPU_COUNT%
-if errorlevel 1 exit 1
+mkdir build
+cd build
 
 cmake -G "Ninja" ^
-    -B build_static/ ^
-    -D ENABLE_CONDA=ON ^
-    -D MULTI_SEMANTICS=ON ^
-    -D WITHOUT_COOKIEOPEN=ON ^
-    -D ENABLE_STATIC=ON ^
-    -D DISABLE_SHARED=ON ^
-    %CMAKE_ARGS%
+      -D CMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
+      -D CMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
+      -D CMAKE_VERBOSE_MAKEFILE=ON ^
+      -D ENABLE_CONDA=ON ^
+      -D MULTI_SEMANTICS=ON ^
+      -D WITHOUT_COOKIEOPEN=ON ^
+      -D CMAKE_BUILD_TYPE=Release ^
+      -D DISABLE_SHARED=OFF ^
+      ..
 if errorlevel 1 exit 1
 
-cmake --build build_static/ --parallel %CPU_COUNT%
+ninja
+if errorlevel 1 exit 1
+
+ninja install
+if errorlevel 1 exit 1
+
+cd ..
+mkdir static_build
+cd static_build
+
+cmake -G "Ninja" ^
+      -D CMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
+      -D CMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
+      -D CMAKE_VERBOSE_MAKEFILE=ON ^
+      -D ENABLE_CONDA=ON ^
+      -D MULTI_SEMANTICS=ON ^
+      -D WITHOUT_COOKIEOPEN=ON ^
+      -D CMAKE_BUILD_TYPE=Release ^
+      -D ENABLE_STATIC=ON ^
+      -D DISABLE_SHARED=ON ^
+      ..
+
+if errorlevel 1 exit 1
+
+ninja
 if errorlevel 1 exit 1
