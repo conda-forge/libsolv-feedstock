@@ -1,11 +1,15 @@
+set "CFLAGS= -MD"
+echo %CFLAGS%
+
+set "CXXFLAGS= -MD"
+echo %CXXFLAGS%
+
 mkdir build
 cd build
 
 cmake -G "Ninja" ^
       -D CMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
       -D CMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
-      -D CMAKE_CXX_FLAGS="-MD" ^
-      -D CMAKE_C_FLAGS="-MD" ^
       -D CMAKE_VERBOSE_MAKEFILE=ON ^
       -D ENABLE_CONDA=ON ^
       -D MULTI_SEMANTICS=ON ^
