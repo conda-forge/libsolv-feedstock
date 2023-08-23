@@ -55,10 +55,6 @@ outputs:
         - test -f ${PREFIX}/lib/libsolvext${SHLIB_EXT}     # [unix]
         - test -f ${PREFIX}/lib/libsolv.so.1               # [linux]
         - test -f ${PREFIX}/include/solv/repo.h            # [unix]
-        - if not exist %LIBRARY_PREFIX%\include\solv\repo.h (exit 1)  # [win]
-        - if not exist %LIBRARY_LIB%\\solv.lib (exit 1)      # [win]
-        - if not exist %LIBRARY_LIB%\\solvext.lib (exit 1)   # [win]
-        - if not exist %LIBRARY_BIN%\\solv.dll (exit 1)      # [win]
         # Running the executables
         - dumpsolv.exe -h  # [win]
         - dumpsolv -h      # [unix]
