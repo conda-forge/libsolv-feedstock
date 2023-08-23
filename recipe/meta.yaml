@@ -63,8 +63,8 @@ outputs:
         - dumpsolv.exe -h  # [win]
         - dumpsolv -h      # [unix]
         # Running a test trying to link to the library
-        - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv.${SHLIB_EXT}" ${CMAKE_ARGS}  # [unix]
-        - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv" %CMAKE_ARGS%                   # [win]
+        - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv${SHLIB_EXT}" ${CMAKE_ARGS}  # [unix]
+        - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv" %CMAKE_ARGS%                  # [win]
         - cmake --build build/
         - cmake --build build --target test
   - name: libsolv-static
