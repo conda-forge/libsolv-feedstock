@@ -43,6 +43,13 @@ outputs:
       host:
         - zlib
     test:
+      requires:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - ninja
+        - cmake
+      files:
+        - test/*
       commands:
         - test -f ${PREFIX}/lib/libsolv${SHLIB_EXT}     # [unix]
         - test -f ${PREFIX}/lib/libsolvext${SHLIB_EXT}  # [unix]
@@ -54,6 +61,9 @@ outputs:
         - if exist %LIBRARY_BIN%\solv.dll (exit 0) else (exit 1)     # [win]
         - dumpsolv.exe -h  # [win]
         - dumpsolv -h      # [unix]
+        - cmake -G Ninja -S test/ -B build/ -D LIB_EXT="so" ${CMAKE_ARGS}
+        - cmake --build build/
+        - cmake --build build --target test
   - name: libsolv-static
     script: install.sh   # [unix]
     script: install.bat  # [win]
@@ -69,11 +79,21 @@ outputs:
       run:
         - {{ pin_subpackage("libsolv", exact=True) }}
     test:
+      requires:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - ninja
+        - cmake
+      files:
+        - test/*
       commands:
-        - test -f ${PREFIX}/lib/libsolv.a  # [unix]
+        - test -f ${PREFIX}/lib/libsolv.a     # [unix]
         - test -f ${PREFIX}/lib/libsolvext.a  # [unix]
-        - if exist %LIBRARY_LIB%\solv_static.lib (exit 0) else (exit 1)  # [win]
+        - if exist %LIBRARY_LIB%\solv_static.lib (exit 0) else (exit 1)     # [win]
         - if exist %LIBRARY_LIB%\solvext_static.lib (exit 0) else (exit 1)  # [win]
+        - cmake -G Ninja -S test/ -B build/ -D LIB_EXT="a" ${CMAKE_ARGS}
+        - cmake --build build/
+        - cmake --build build --target test
 
 about:
   home: https://github.com/openSUSE/libsolv
