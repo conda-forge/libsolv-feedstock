@@ -5,6 +5,9 @@
 # For dispatching between Unix and Windows
 {% set install_prefix = "." %}        # [unix]
 {% set install_prefix = "Library" %}  # [win]
+{% set shlib_ext = "so" %}     # [linux]
+{% set shlib_ext = "dylib" %}  # [unix and not linux]
+{% set shlib_ext = "dll" %}    # [win]
 
 package:
   # Setting a dummy name, because multi-output behaviour with similar name has surprising behaviour
@@ -39,9 +42,9 @@ outputs:
     files:
       - "{{ install_prefix }}/bin/"
       - "{{ install_prefix }}/include/solv/"
-      - "{{ install_prefix }}/lib/libsolv*${SHLIB_EXT}*"  # [unix]
-      - "{{ install_prefix }}/lib/solv.lib"               # [win]
-      - "{{ install_prefix }}/lib/solvext.lib"            # [win]
+      - "{{ install_prefix }}/lib/libsolv*.{{ shlib_ext }}*"  # [unix]
+      - "{{ install_prefix }}/lib/solv.lib"                   # [win]
+      - "{{ install_prefix }}/lib/solvext.lib"                # [win]
       - "{{ install_prefix }}/lib/pkgconfig/"
       - "{{ install_prefix }}/share/"
     requirements:
