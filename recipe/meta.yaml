@@ -3,7 +3,8 @@
 {% set sha256 = "62743265222a729c7fe94c40f7b90ccc1ac5568f5ee6df46884e7ce3c16c78c7" %}
 
 package:
-  name: {{ name|lower }}
+  # Setting a dummy name, because multi-output behaviour with similar name has surprising behaviour
+  name: {{ name|lower }}-split
   version: {{ version }}
 
 source:
@@ -24,36 +25,43 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - make  # [not win]
-    - ninja  # [win]
+    - ninja
     - cmake
   host:
     - zlib
 
 outputs:
   - name: libsolv
-    script: install.sh  # [unix]
-    test:
-      commands:
-        - test -f ${PREFIX}/lib/libsolv${SHLIB_EXT}  # [unix]
-        - test -f ${PREFIX}/lib/libsolvext${SHLIB_EXT}  # [unix]
-        - test -f ${PREFIX}/lib/libsolv.so.1  # [linux]
-        - test -f ${PREFIX}/include/solv/repo.h  # [unix]
-        - if exist %LIBRARY_INC%\solv\repo.h (exit 0) else (exit 1)  # [win]
-        - if exist %LIBRARY_LIB%\solv.lib (exit 0) else (exit 1)  # [win]
-        - if exist %LIBRARY_LIB%\solvext.lib (exit 0) else (exit 1)  # [win]
-        - if exist %LIBRARY_BIN%\solv.dll (exit 0) else (exit 1)  # [win]
-        - dumpsolv.exe -h  # [win]
-        - dumpsolv -h  # [unix]
-  - name: libsolv-static
-    script: install.sh  # [unix]
-    script: install_static.bat  # [win]
+    script: install.sh   # [unix]
+    script: install.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - make  # [not win]
-        - ninja  # [win]
+        - ninja
+        - cmake
+      host:
+        - zlib
+    test:
+      commands:
+        - test -f ${PREFIX}/lib/libsolv${SHLIB_EXT}     # [unix]
+        - test -f ${PREFIX}/lib/libsolvext${SHLIB_EXT}  # [unix]
+        - test -f ${PREFIX}/lib/libsolv.so.1            # [linux]
+        - test -f ${PREFIX}/include/solv/repo.h         # [unix]
+        - if exist %LIBRARY_INC%\solv\repo.h (exit 0) else (exit 1)  # [win]
+        - if exist %LIBRARY_LIB%\solv.lib (exit 0) else (exit 1)     # [win]
+        - if exist %LIBRARY_LIB%\solvext.lib (exit 0) else (exit 1)  # [win]
+        - if exist %LIBRARY_BIN%\solv.dll (exit 0) else (exit 1)     # [win]
+        - dumpsolv.exe -h  # [win]
+        - dumpsolv -h      # [unix]
+  - name: libsolv-static
+    script: install.sh   # [unix]
+    script: install.bat  # [win]
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - ninja
         - cmake
       host:
         - zlib
