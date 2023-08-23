@@ -59,9 +59,12 @@ outputs:
         - if exist %LIBRARY_LIB%\solv.lib (exit 0) else (exit 1)     # [win]
         - if exist %LIBRARY_LIB%\solvext.lib (exit 0) else (exit 1)  # [win]
         - if exist %LIBRARY_BIN%\solv.dll (exit 0) else (exit 1)     # [win]
+        # Runining the executables
         - dumpsolv.exe -h  # [win]
         - dumpsolv -h      # [unix]
-        - cmake -G Ninja -S test/ -B build/ -D LIB_EXT="so" ${CMAKE_ARGS}
+        # Running a test trying to link to the library
+        - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv.${SHLIB_EXT}" ${CMAKE_ARGS}  # [unix]
+        - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv" %CMAKE_ARGS%                   # [win]
         - cmake --build build/
         - cmake --build build --target test
   - name: libsolv-static
@@ -91,7 +94,9 @@ outputs:
         - test -f ${PREFIX}/lib/libsolvext.a  # [unix]
         - if exist %LIBRARY_LIB%\solv_static.lib (exit 0) else (exit 1)     # [win]
         - if exist %LIBRARY_LIB%\solvext_static.lib (exit 0) else (exit 1)  # [win]
-        - cmake -G Ninja -S test/ -B build/ -D LIB_EXT="a" ${CMAKE_ARGS}
+        # Running a test trying to link to the library
+        - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv.a" ${CMAKE_ARGS}   # [unix]
+        - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv_static" %CMAKE_ARGS%  # [win]
         - cmake --build build/
         - cmake --build build --target test
 
