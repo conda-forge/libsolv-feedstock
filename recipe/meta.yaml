@@ -64,14 +64,17 @@ outputs:
       files:
         - test/*
       commands:
-        - test -f "${PREFIX}/lib/libsolv${SHLIB_EXT}"        # [unix]
-        - test -f "${PREFIX}/lib/libsolvext${SHLIB_EXT}"     # [unix]
-        - test -f "${PREFIX}/lib/libsolv.so.1"               # [linux]
-        - test -f "${PREFIX}/include/solv/repo.h"            # [unix]
-        - if not exist %LIBRARY_PREFIX%\include\solv\repo.h (exit 1)  # [win]
-        - if not exist %LIBRARY_LIB%\\solv.lib (exit 1)      # [win]
-        - if not exist %LIBRARY_LIB%\\solvext.lib (exit 1)   # [win]
-        - if not exist %LIBRARY_BIN%\\solv.dll (exit 1)      # [win]
+        - test -f "${PREFIX}/lib/libsolv${SHLIB_EXT}"         # [unix]
+        - test -f "${PREFIX}/lib/libsolvext${SHLIB_EXT}"      # [unix]
+        - test -f "${PREFIX}/lib/libsolv.so.1"                # [linux]
+        - test -f "${PREFIX}/include/solv/repo.h"             # [unix]
+        - if not exist %LIBRARY_INC%\solv\repo.h (exit 1)     # [win]
+        - if not exist %LIBRARY_BIN%\solv.dll (exit 1)        # [win]
+        - if not exist %LIBRARY_LIB%\solv.lib (exit 1)        # [win]
+        - if not exist %LIBRARY_BIN%\solvext.dll (exit 1)     # [win]
+        - if not exist %LIBRARY_LIB%\solvext.lib (exit 1)     # [win]
+        - if exist %LIBRARY_LIB%\solv_static.lib (exit 1)     # [win]
+        - if exist %LIBRARY_LIB%\solvext_static.lib (exit 1)  # [win]
         # Running the executables
         - dumpsolv.exe -h  # [win]
         - dumpsolv -h      # [unix]
@@ -80,6 +83,7 @@ outputs:
         - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv" %CMAKE_ARGS%                  # [win]
         - cmake --build build/
         - cmake --build build --target test
+
   - name: libsolv-static
     files:
       - "{{ install_prefix }}/lib/libsolv*.a*"         # [unix]
@@ -105,10 +109,10 @@ outputs:
       files:
         - test/*
       commands:
-        - test -f ${PREFIX}/lib/libsolv.a     # [unix]
-        - test -f ${PREFIX}/lib/libsolvext.a  # [unix]
-        - if not exist %LIBRARY_LIB%\\solv_static.lib (exit 1)     # [win]
-        - if not exist %LIBRARY_LIB%\\solvext_static.lib (exit 1)  # [win]
+        - test -f "${PREFIX}/lib/libsolv.a"     # [unix]
+        - test -f "${PREFIX}/lib/libsolvext.a"  # [unix]
+        - if not exist %LIBRARY_LIB%\solv_static.lib (exit 1)     # [win]
+        - if not exist %LIBRARY_LIB%\solvext_static.lib (exit 1)  # [win]
         # Running a test trying to link to the library
         - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv.a" ${CMAKE_ARGS}   # [unix]
         - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv_static" %CMAKE_ARGS%  # [win]
