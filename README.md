@@ -1,11 +1,11 @@
-About libsolv
-=============
+About libsolv-feedstock
+=======================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/libsolv-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/openSUSE/libsolv
 
 Package license: BSD-3-Clause
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/libsolv-feedstock/blob/main/LICENSE.txt)
 
 Summary: Library for solving packages and reading repositories
 
