@@ -1,11 +1,11 @@
-cmake -G "Ninja" ^
-    -B build/ ^
+cmake -B build/ ^
+    -G "Ninja" ^
     -D ENABLE_CONDA=ON ^
     -D MULTI_SEMANTICS=ON ^
     -D WITHOUT_COOKIEOPEN=ON ^
-    -D ENABLE_STATIC=OFF ^
-    -D DISABLE_SHARED=OFF ^
     -D CMAKE_MSVC_RUNTIME_LIBRARY="MultiThreadedDLL" ^
+    -D DISABLE_SHARED=OFF ^
+    -D ENABLE_STATIC=OFF ^
     %CMAKE_ARGS%
 if errorlevel 1 exit 1
 
@@ -15,14 +15,14 @@ if errorlevel 1 exit 1
 cmake --install build/
 if errorlevel 1 exit 1
 
-cmake -G "Ninja" ^
-    -B build_static/ ^
+cmake -B build_static/ ^
+    -G "Ninja" ^
     -D ENABLE_CONDA=ON ^
     -D MULTI_SEMANTICS=ON ^
     -D WITHOUT_COOKIEOPEN=ON ^
-    -D ENABLE_STATIC=ON ^
+    -D CMAKE_MSVC_RUNTIME_LIBRARY="MultiThreadedDLL" ^
     -D DISABLE_SHARED=ON ^
-    -D CMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded" ^
+    -D ENABLE_STATIC=ON ^
     %CMAKE_ARGS%
 if errorlevel 1 exit 1
 
