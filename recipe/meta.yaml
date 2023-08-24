@@ -24,7 +24,7 @@ source:
     - no_error_subdir_mismatch.patch
 
 build:
-  number: 4
+  number: 5
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
@@ -45,8 +45,9 @@ outputs:
       - "{{ install_prefix }}/lib/libsolv*.{{ shlib_ext }}*"  # [unix]
       - "{{ install_prefix }}/lib/solv.lib"                   # [win]
       - "{{ install_prefix }}/lib/solvext.lib"                # [win]
-      - "{{ install_prefix }}/lib/pkgconfig/"
-      - "{{ install_prefix }}/share/"
+      - "{{ install_prefix }}/lib/pkgconfig/libsolv*"
+      - "{{ install_prefix }}/share/cmake"
+      - "{{ install_prefix }}/share/man"
     requirements:
       build:
         - {{ compiler('c') }}
