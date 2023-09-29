@@ -21,6 +21,7 @@ cmake -B build_static/ ^
     -D MULTI_SEMANTICS=ON ^
     -D WITHOUT_COOKIEOPEN=ON ^
     -D CMAKE_MSVC_RUNTIME_LIBRARY="MultiThreadedDLL" ^
+    -D CMAKE_RELEASE_POSTFIX="_static" ^
     -D DISABLE_SHARED=ON ^
     -D ENABLE_STATIC=ON ^
     %CMAKE_ARGS%
