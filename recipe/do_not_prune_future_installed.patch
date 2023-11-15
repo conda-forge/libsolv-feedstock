@@ -1,0 +1,20 @@
+diff --git a/src/solver.c b/src/solver.c
+index bdce9a9d..9bda624b 100644
+--- a/src/solver.c
++++ b/src/solver.c
+@@ -1369,9 +1369,12 @@ selectandinstall(Solver *solv, int level, Queue *dq, int disablerules, Id ruleid
+    * do some special pruning and supplements ordering */
+   if (dq->count > 1 && solv->do_extra_reordering)
+     {
+-      prune_dq_for_future_installed(solv, dq);
+-      if (dq->count > 1)
+-	reorder_dq_for_future_installed(solv, level, dq);
++      // causes non-deterministic behavior in some solves
++      // see https://github.com/conda/conda-libmamba-solver/issues/317
++      // reverts part of https://github.com/openSUSE/libsolv/commit/4edf4e62db655734d0
++      // prune_dq_for_future_installed(solv, dq);
++      // if (dq->count > 1)
++       reorder_dq_for_future_installed(solv, level, dq);
+     }
+   /* check if the candidates are all connected via yumobs rules */
+   if (dq->count > 1 && solv->yumobsrules_end > solv->yumobsrules)
