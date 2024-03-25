@@ -24,7 +24,7 @@ source:
     - no_error_subdir_mismatch.patch
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
@@ -39,15 +39,8 @@ requirements:
 
 outputs:
   - name: libsolv
-    files:
-      - "{{ install_prefix }}/bin/"
-      - "{{ install_prefix }}/include/solv/"
-      - "{{ install_prefix }}/lib/libsolv*.{{ shlib_ext }}*"  # [unix]
-      - "{{ install_prefix }}/lib/solv.lib"                   # [win]
-      - "{{ install_prefix }}/lib/solvext.lib"                # [win]
-      - "{{ install_prefix }}/lib/pkgconfig/libsolv*"
-      - "{{ install_prefix }}/share/cmake"
-      - "{{ install_prefix }}/share/man"
+    script: build_libsolv.sh   # [unix]
+    script: build_libsolv.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -86,10 +79,8 @@ outputs:
         - cmake --build build --target test
 
   - name: libsolv-static
-    files:
-      - "{{ install_prefix }}/lib/libsolv*.a*"         # [unix]
-      - "{{ install_prefix }}/lib/solv_static.lib"     # [win]
-      - "{{ install_prefix }}/lib/solvext_static.lib"  # [win]
+    script: build_libsolv.sh   # [unix]
+    script: build_libsolv.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
