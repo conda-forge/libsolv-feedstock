@@ -39,8 +39,8 @@ requirements:
 
 outputs:
   - name: libsolv
-    script: build_libsolv.sh  # [unix]
-    script: build_libsolv.sh  # [win]
+    script: build_libsolv.sh   # [unix]
+    script: build_libsolv.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -80,8 +80,8 @@ outputs:
         - cmake --build build --target test
 
   - name: libsolv-static
-    script: build_libsolv.sh  # [unix]
-    script: build_libsolv.sh  # [win]
+    script: build_libsolv.sh   # [unix]
+    script: build_libsolv.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
