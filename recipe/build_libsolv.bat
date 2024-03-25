@@ -19,7 +19,7 @@ if /I "%PKG_NAME%" == "libsolv" (
 
 )
 
-if /I "%PKG_NAME%" == "libsolv_static" (
+if /I "%PKG_NAME%" == "libsolv-static" (
 
     cmake -B build_static/ ^
         -G "Ninja" ^
