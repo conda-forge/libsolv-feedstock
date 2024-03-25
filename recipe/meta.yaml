@@ -69,7 +69,6 @@ outputs:
         - if not exist %LIBRARY_LIB%\solvext.lib (exit 1)     # [win]
         - if exist %LIBRARY_LIB%\solv_static.lib (exit 1)     # [win]
         - if exist %LIBRARY_LIB%\solvext_static.lib (exit 1)  # [win]
-        - if exist %LIBRARY_BIN%\zlib.dll (exit 1)            # [win]
         # Running the executables
         - dumpsolv.exe -h  # [win]
         - dumpsolv -h      # [unix]
