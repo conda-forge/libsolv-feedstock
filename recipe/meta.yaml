@@ -1,6 +1,6 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.28" %}
-{% set sha256 = "bd2406f498fea6086ae0eacbf8b188c98b380e59af2267170e6a7b7d715cb207" %}
+{% set version = "0.7.29" %}
+{% set sha256 = "cb8d36a345ea9491f75d88c3a36a6f575c4e25f08197562f7ab0aa1c6e8c6abd" %}
 
 # For dispatching between Unix and Windows
 {% set install_prefix = "." %}  # [unix]
@@ -24,13 +24,14 @@ source:
     - no_error_subdir_mismatch.patch
 
 build:
-  number: 2
+  number: 0
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - ninja
     - cmake
@@ -39,7 +40,7 @@ requirements:
 
 outputs:
   - name: libsolv
-    script: build_libsolv.sh   # [unix]
+    script: build_libsolv.sh  # [unix]
     script: build_libsolv.bat  # [win]
     build:
       run_exports:
@@ -47,6 +48,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - ninja
         - cmake
@@ -82,11 +84,12 @@ outputs:
         - cmake --build build --target test
 
   - name: libsolv-static
-    script: build_libsolv.sh   # [unix]
+    script: build_libsolv.sh  # [unix]
     script: build_libsolv.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - ninja
         - cmake
