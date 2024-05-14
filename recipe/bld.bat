@@ -9,7 +9,7 @@ cmake -B build/ ^
     %CMAKE_ARGS%
 if errorlevel 1 exit 1
 
-cmake --build build/ --parallel %CPU_COUNT%
+cmake --build build/ --parallel %CPU_COUNT% --verbose
 if errorlevel 1 exit 1
 
 cmake --install build/
@@ -26,7 +26,7 @@ cmake -B build_static/ ^
     %CMAKE_ARGS%
 if errorlevel 1 exit 1
 
-cmake --build build_static/ --parallel %CPU_COUNT%
+cmake --build build_static/ --parallel %CPU_COUNT% --verbose
 if errorlevel 1 exit 1
 
 cmake --install build_static/
