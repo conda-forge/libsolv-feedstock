@@ -10,6 +10,7 @@ if [[ $PKG_NAME == "libsolv" ]]; then
         -D MULTI_SEMANTICS=ON \
         -D DISABLE_SHARED=OFF \
         -D ENABLE_STATIC=OFF \
+        -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \
         ${CMAKE_ARGS}
     cmake --build build/ --parallel ${CPU_COUNT} --verbose
     cmake --install build/
@@ -22,6 +23,7 @@ elif [[ $PKG_NAME == "libsolv-static" ]]; then
         -D MULTI_SEMANTICS=ON \
         -D DISABLE_SHARED=ON \
         -D ENABLE_STATIC=ON \
+        -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \
         ${CMAKE_ARGS}
     cmake --build build_static/ --parallel ${CPU_COUNT} --verbose
     cmake --install build_static/
