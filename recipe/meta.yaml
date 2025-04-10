@@ -34,7 +34,7 @@ requirements:
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - ninja
-    - cmake
+    - cmake <4.0
   host:
     - zlib
 
