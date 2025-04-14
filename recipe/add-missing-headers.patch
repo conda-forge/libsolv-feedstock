@@ -1,0 +1,32 @@
+From b9e746e06570355568035dcfff835fbe797bf31a Mon Sep 17 00:00:00 2001
+From: AntoinePrv <AntoinePrv@users.noreply.github.com>
+Date: Mon, 14 Apr 2025 14:15:53 +0200
+Subject: [PATCH] add missing headers
+
+---
+ ext/solv_xfopen.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/ext/solv_xfopen.h b/ext/solv_xfopen.h
+index b79e0093..24b68252 100644
+--- a/ext/solv_xfopen.h
++++ b/ext/solv_xfopen.h
+@@ -8,6 +8,15 @@
+ #ifndef SOLV_XFOPEN_H
+ #define SOLV_XFOPEN_H
+ 
++#include <stddef.h>
++
++#ifdef _WIN32
++  #include <BaseTsd.h>
++  typedef SSIZE_T ssize_t;
++#else
++  #include <unistd.h>
++#endif
++
+ extern FILE *solv_xfopen(const char *fn, const char *mode);
+ extern FILE *solv_xfopen_fd(const char *fn, int fd, const char *mode);
+ extern FILE *solv_xfopen_buf(const char *fn, char **bufp, size_t *buflp, const char *mode);
+-- 
+2.48.1
+
