@@ -8,7 +8,6 @@ if /I "%PKG_NAME%" == "libsolv" (
         -D CMAKE_MSVC_RUNTIME_LIBRARY="MultiThreadedDLL" ^
         -D DISABLE_SHARED=OFF ^
         -D ENABLE_STATIC=OFF ^
-        -D CMAKE_POLICY_VERSION_MINIMUM=3.5 ^
         %CMAKE_ARGS%
     if errorlevel 1 exit 1
 
@@ -31,7 +30,6 @@ if /I "%PKG_NAME%" == "libsolv-static" (
         -D CMAKE_RELEASE_POSTFIX="_static" ^
         -D DISABLE_SHARED=ON ^
         -D ENABLE_STATIC=ON ^
-        -D CMAKE_POLICY_VERSION_MINIMUM=3.5 ^
         %CMAKE_ARGS%
     if errorlevel 1 exit 1
 
