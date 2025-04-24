@@ -25,9 +25,9 @@ source:
     - add-missing-headers.patch  # For libsolv<=0.7.32
 
 build:
-  number: 1
+  number: 2
   run_exports:
-    - {{ pin_subpackage(name, max_pin='x.x') }}
+    - {{ pin_subpackage(name, max_pin='x.x.x') }}
 
 requirements:
   build:
