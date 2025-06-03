@@ -1,6 +1,6 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.32" %}
-{% set sha256 = "8c5957fb417823768d70e0faefa6f75f497f41289641256e4fdfecd1954fa16c" %}
+{% set version = "0.7.33" %}
+{% set sha256 = "776f3c9cc253cd860e72c8c489c7a067c46a96d6993ff302f68d9efd03b37cba" %}
 
 # For dispatching between Unix and Windows
 {% set install_prefix = "." %}  # [unix]
@@ -25,7 +25,7 @@ source:
     - add-missing-headers.patch  # For libsolv<=0.7.32
 
 build:
-  number: 2
+  number: 0
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x.x') }}
 
