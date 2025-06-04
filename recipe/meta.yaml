@@ -22,6 +22,7 @@ source:
     - win_export_and_static_build.patch  # [win]
     - conda_variant_priorization.patch
     - no_error_subdir_mismatch.patch
+    - header_win.patch  # For libsolv<=0.7.33
 
 build:
   number: 0
