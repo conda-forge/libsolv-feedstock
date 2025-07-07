@@ -1,6 +1,6 @@
 {% set name = "libsolv" %}
-{% set version = "0.7.33" %}
-{% set sha256 = "776f3c9cc253cd860e72c8c489c7a067c46a96d6993ff302f68d9efd03b37cba" %}
+{% set version = "0.7.34" %}
+{% set sha256 = "fd9c8a75d3ca09d9ff7b0d160902fac789b3ce6f9fb5b46a7647895f9d3eaf05" %}
 
 # For dispatching between Unix and Windows
 {% set install_prefix = "." %}  # [unix]
