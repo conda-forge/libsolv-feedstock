@@ -101,8 +101,8 @@ outputs:
                 - libsolv.a
                 - libsolvext.a
               else:
-                - solv_static
-                - solvext_static
+                - solv_static.lib
+                - solvext_static.lib
           files:
             not_exists:
               - if: linux
