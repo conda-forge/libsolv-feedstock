@@ -19,7 +19,7 @@ source:
     - header_win.patch  # For libsolv<=0.7.33
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - package:
