@@ -1,0 +1,153 @@
+schema_version: 1
+
+context:
+  version: 0.7.33
+
+recipe:
+  name: libsolv-split
+  version: ${{ version }}
+
+source:
+  url: https://github.com/openSUSE/libsolv/archive/${{ version }}.tar.gz
+  sha256: 776f3c9cc253cd860e72c8c489c7a067c46a96d6993ff302f68d9efd03b37cba
+  # file_name: libsolv-${{ version }}.tar.gz
+  patches:
+    - if: win
+      then: win_export_and_static_build.patch
+    - conda_variant_priorization.patch
+    - no_error_subdir_mismatch.patch
+    - header_win.patch  # For libsolv<=0.7.33
+
+build:
+  number: 0
+
+outputs:
+  - package:
+      name: libsolv
+    build:
+      script: build_libsolv
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib("c") }}
+        - ${{ compiler('cxx') }}
+        - ninja
+        - cmake <4.0
+      host:
+        - zlib
+      run_exports:
+        - ${{ pin_subpackage('libsolv', upper_bound='x.x') }}
+    tests:
+      - package_contents:
+          bin:
+            - dumpsolv
+          lib:
+            - solv
+            - solvext
+            - if: linux
+              then: libsolv.so.1
+          include:
+            - solv/repo.h
+          files:
+            not_exists:
+              - if: unix
+                then:
+                  - lib/libsolv.a
+                  - lib/libsolvext.a
+                else:
+                  - Library/lib/solv_static.lib
+                  - Library/lib/solvext_static.lib
+      - script:
+          - if: unix
+            then:
+              - dumpsolv -h
+              - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv${SHLIB_EXT}" ${CMAKE_ARGS}
+            else: 
+              - dumpsolv.exe -h
+              - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv" %CMAKE_ARGS%
+          - cmake --build build/
+          - cmake --build build --target test
+        requirements:
+          run:
+            - ${{ compiler('c') }}
+            - ${{ compiler('cxx') }}
+            - ninja
+            - cmake <4.0
+        files:
+          recipe:
+            - test/
+
+  - package:
+      name: libsolv-static
+    build:
+      script: build_libsolv
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib("c") }}
+        - ${{ compiler('cxx') }}
+        - ninja
+        - cmake <4.0
+      host:
+        - zlib
+        - ${{ pin_subpackage("libsolv", exact=True) }}
+      run:
+        - ${{ pin_subpackage("libsolv", exact=True) }}
+    tests:
+      - package_contents:
+          lib:
+            - if: unix
+              then:
+                - libsolv.a
+                - libsolvext.a
+              else:
+                - solv_static
+                - solvext_static
+          files:
+            not_exists:
+              - if: linux
+                then:
+                  - lib/libsolv.so
+                  - lib/libsolvext.so
+              - if: osx
+                then:
+                  - lib/libsolv.dylib
+                  - lib/libsolvext.dylib
+              - if: win
+                then:
+                  - Library/lib/solv.lib
+                  - Library/lib/solvext.lib
+      - script:
+        - if: unix
+          then: cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv.a" ${CMAKE_ARGS}
+        - if: win
+          then: cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv_static" %CMAKE_ARGS%
+        - cmake --build build/
+        - cmake --build build --target test
+        files:
+          recipe:
+            - test/
+        requirements:
+          run:
+            - ${{ compiler('c') }}
+            - ${{ compiler('cxx') }}
+            - ninja
+            - cmake <4.0
+
+about:
+  license: BSD-3-Clause
+  license_file: LICENSE.BSD
+  summary: Library for solving packages and reading repositories
+  description: libsolv, a free package dependency solver using a satisfiability algorithm.
+  homepage: https://github.com/openSUSE/libsolv
+  repository: https://github.com/openSUSE/libsolv
+
+extra:
+  recipe-maintainers:
+    - AntoinePrv
+    - pavelzw
+    - SylvainCorlay
+    - JohanMabille
+    - wolfv
+    - davidbrochart
+    - adriendelsalle
