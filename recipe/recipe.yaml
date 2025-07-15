@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 0.7.33
+  version: "0.7.34"
 
 recipe:
   name: libsolv-split
@@ -9,17 +9,15 @@ recipe:
 
 source:
   url: https://github.com/openSUSE/libsolv/archive/${{ version }}.tar.gz
-  sha256: 776f3c9cc253cd860e72c8c489c7a067c46a96d6993ff302f68d9efd03b37cba
-  # file_name: libsolv-${{ version }}.tar.gz
+  sha256: fd9c8a75d3ca09d9ff7b0d160902fac789b3ce6f9fb5b46a7647895f9d3eaf05
   patches:
     - if: win
       then: win_export_and_static_build.patch
     - conda_variant_priorization.patch
     - no_error_subdir_mismatch.patch
-    - header_win.patch  # For libsolv<=0.7.33
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - package:
@@ -62,7 +60,7 @@ outputs:
             then:
               - dumpsolv -h
               - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv${SHLIB_EXT}" ${CMAKE_ARGS}
-            else: 
+            else:
               - dumpsolv.exe -h
               - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv" %CMAKE_ARGS%
           - cmake --build build/
@@ -118,12 +116,12 @@ outputs:
                   - Library/lib/solv.lib
                   - Library/lib/solvext.lib
       - script:
-        - if: unix
-          then: cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv.a" ${CMAKE_ARGS}
-        - if: win
-          then: cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv_static" %CMAKE_ARGS%
-        - cmake --build build/
-        - cmake --build build --target test
+          - if: unix
+            then: cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv.a" ${CMAKE_ARGS}
+          - if: win
+            then: cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv_static" %CMAKE_ARGS%
+          - cmake --build build/
+          - cmake --build build --target test
         files:
           recipe:
             - test/
