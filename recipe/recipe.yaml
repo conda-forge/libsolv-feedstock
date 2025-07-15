@@ -10,13 +10,11 @@ recipe:
 source:
   url: https://github.com/openSUSE/libsolv/archive/${{ version }}.tar.gz
   sha256: fd9c8a75d3ca09d9ff7b0d160902fac789b3ce6f9fb5b46a7647895f9d3eaf05
-  # file_name: libsolv-${{ version }}.tar.gz
   patches:
     - if: win
       then: win_export_and_static_build.patch
     - conda_variant_priorization.patch
     - no_error_subdir_mismatch.patch
-    - header_win.patch  # For libsolv<=0.7.33
 
 build:
   number: 0
