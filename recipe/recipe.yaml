@@ -14,6 +14,7 @@ source:
     - if: win
       then: win_export_and_static_build.patch
     - conda_variant_priorization.patch
+    - libsolv-conda_variant_priorization-build_number.patch
     - no_error_subdir_mismatch.patch
 
 build:

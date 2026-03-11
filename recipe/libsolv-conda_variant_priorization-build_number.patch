@@ -1,0 +1,30 @@
+--- a/src/policy.c	2026-03-11 11:35:03.691207427 +0100
++++ b/src/policy.c	2026-03-11 11:35:04.727380719 +0100
+@@ -1036,10 +1036,12 @@
+   {
+     stmp = pool_id2solvable(pool, selection.elements[i]);
+     cmp = pool_evrcmp(pool, best->evr, stmp->evr, 0);
++    if (cmp == 0)
++      cmp = pool_buildversioncmp(pool, best, stmp);
+     if (cmp < 0) best = stmp;
+   }
+ 
+-  return best->evr;
++  return pool_solvable2id(pool, best);
+ }
+ 
+ int conda_compare_dependencies(Pool *pool, Solvable *s1, Solvable *s2)
+@@ -1094,7 +1096,12 @@
+     if (aht_1 != aht_2)
+       comparison_result += (aht_1 - aht_2) * 100;
+ 
+-    comparison_result += pool_evrcmp(pool, b2, b1, 0);
++    Solvable *best1 = pool_id2solvable(pool, b1);
++    Solvable *best2 = pool_id2solvable(pool, b2);
++    int cmp = pool_evrcmp(pool, best2->evr, best1->evr, 0);
++    if (cmp == 0)
++      cmp = pool_buildversioncmp(pool, best2, best1);
++    comparison_result += cmp;
+   }
+ 
+   queue_free(&q1);
