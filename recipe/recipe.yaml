@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "0.7.36"
+  version: "0.7.37"
 
 recipe:
   name: libsolv-split
@@ -9,7 +9,7 @@ recipe:
 
 source:
   url: https://github.com/openSUSE/libsolv/archive/${{ version }}.tar.gz
-  sha256: 32b8a565b70b6ba81d9ad68070de4561dfc8462be12288725a267a90423c0fa6
+  sha256: ad6a38624dde26fc59c41427608536c443b76f90dcb6bb96c2e70b8e3ee20419
   patches:
     - if: win
       then: win_export_and_static_build.patch
