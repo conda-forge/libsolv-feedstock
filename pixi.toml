@@ -5,11 +5,11 @@
 
 [workspace]
 name = "libsolv-feedstock"
-version = "3.62.0"  # conda-smithy version used to generate this file
+version = "2026.6.14"  # conda-smithy version used to generate this file
 description = "Pixi configuration for conda-forge/libsolv-feedstock"
 authors = ["@conda-forge/libsolv"]
 channels = ["conda-forge"]
-platforms = ["linux-64", "linux-aarch64", "linux-ppc64le", "osx-64", "win-64"]
+platforms = ["linux-64", "linux-aarch64", "linux-ppc64le", "linux-riscv64", "osx-64", "win-64"]
 requires-pixi = ">=0.59.0"
 
 [dependencies]
@@ -41,6 +41,12 @@ description = "Build libsolv-feedstock with variant linux_ppc64le_ directly (wit
 [tasks."inspect-linux_ppc64le_"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_.yaml"
 description = "List contents of libsolv-feedstock packages built for variant linux_ppc64le_"
+[tasks."build-linux_riscv64_"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_riscv64_.yaml"
+description = "Build libsolv-feedstock with variant linux_riscv64_ directly (without setup scripts)"
+[tasks."inspect-linux_riscv64_"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_riscv64_.yaml"
+description = "List contents of libsolv-feedstock packages built for variant linux_riscv64_"
 [tasks."build-osx_64_"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_.yaml"
 description = "Build libsolv-feedstock with variant osx_64_ directly (without setup scripts)"
