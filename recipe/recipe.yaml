@@ -17,7 +17,7 @@ source:
     - no_error_subdir_mismatch.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - package:
