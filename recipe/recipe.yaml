@@ -17,7 +17,7 @@ source:
     - no_error_subdir_mismatch.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - package:
@@ -55,25 +55,30 @@ outputs:
                 else:
                   - Library/lib/solv_static.lib
                   - Library/lib/solvext_static.lib
-      - script:
-          - if: unix
-            then:
-              - dumpsolv -h
-              - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv${SHLIB_EXT}" ${CMAKE_ARGS}
-            else:
-              - dumpsolv.exe -h
-              - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv" %CMAKE_ARGS%
-          - cmake --build build/
-          - cmake --build build --target test
-        requirements:
-          run:
-            - ${{ compiler('c') }}
-            - ${{ compiler('cxx') }}
-            - ninja
-            - cmake <4.0
-        files:
-          recipe:
-            - test/
+      # Disabling tests and their dependencies resolution for lack of cmake and ninja on this
+      # platform at the time of merging. We can try to re-enable it later on.
+      # https://github.com/conda-forge/libsolv-feedstock/pull/117
+      - if: not (linux and riscv64)
+        then:
+          script:
+            - if: unix
+              then:
+                - dumpsolv -h
+                - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv${SHLIB_EXT}" ${CMAKE_ARGS}
+              else:
+                - dumpsolv.exe -h
+                - cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv" %CMAKE_ARGS%
+            - cmake --build build/
+            - cmake --build build --target test
+          requirements:
+            run:
+              - ${{ compiler('c') }}
+              - ${{ compiler('cxx') }}
+              - ninja
+              - cmake <4.0
+          files:
+            recipe:
+              - test/
 
   - package:
       name: libsolv-static
@@ -115,22 +120,25 @@ outputs:
                 then:
                   - Library/lib/solv.lib
                   - Library/lib/solvext.lib
-      - script:
-          - if: unix
-            then: cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv.a" ${CMAKE_ARGS}
-          - if: win
-            then: cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv_static" %CMAKE_ARGS%
-          - cmake --build build/
-          - cmake --build build --target test
-        files:
-          recipe:
-            - test/
-        requirements:
-          run:
-            - ${{ compiler('c') }}
-            - ${{ compiler('cxx') }}
-            - ninja
-            - cmake <4.0
+      # Missing deps, see above.
+      - if: not (linux and riscv64)
+        then:
+          script:
+            - if: unix
+              then: cmake -G Ninja -S test/ -B build/ -D LIB_NAME="libsolv.a" ${CMAKE_ARGS}
+            - if: win
+              then: cmake -G Ninja -S test/ -B build/ -D LIB_NAME="solv_static" %CMAKE_ARGS%
+            - cmake --build build/
+            - cmake --build build --target test
+          files:
+            recipe:
+              - test/
+          requirements:
+            run:
+              - ${{ compiler('c') }}
+              - ${{ compiler('cxx') }}
+              - ninja
+              - cmake <4.0
 
 about:
   license: BSD-3-Clause
