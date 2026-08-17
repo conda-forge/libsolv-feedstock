@@ -55,6 +55,9 @@ outputs:
                 else:
                   - Library/lib/solv_static.lib
                   - Library/lib/solvext_static.lib
+      # Disabling tests and their dependencies resolution for lack of cmake and ninja on this
+      # platform at the time of merging. We can try to re-enable it later on.
+      # https://github.com/conda-forge/libsolv-feedstock/pull/117
       - if: not (linux and riscv64)
         then:
           script:
@@ -117,6 +120,7 @@ outputs:
                 then:
                   - Library/lib/solv.lib
                   - Library/lib/solvext.lib
+      # Missing deps, see above.
       - if: not (linux and riscv64)
         then:
           script:
